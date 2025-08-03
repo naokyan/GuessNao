@@ -117,15 +117,15 @@ def guess():
 
     if request.method == 'POST':
         if request.form.get("give_up") == "1":
-            result = f"❌ 你还不够单推...正确答案是{answer['名前']}..."
+            result = f"❌ お前はまだまだだ...正解は{answer['名前']}..."
             session.pop('answer')
         else:
             guess_name = request.form.get('guess_name')
 
             if guess_name in guessed:
-                error = f"⚠️ 你已经猜过 {guess_name} 了，请换一个试试！"
+                error = f"⚠️  {guess_name} はすでに推測されています。別のキャラを試してください。"
             elif guess_name not in filtered_names:
-                error = "❗ 没有这个角色，请重新输入！"
+                error = "❗ そのキャラクターは見つかりませんでした。もう一度入力してください。"
             else:
                 session['attempts'] += 1
                 attempts = session['attempts']
@@ -133,14 +133,14 @@ def guess():
                 guessed.append(guess_name)
 
                 if guess_name == answer['名前']:
-                    result = f'✅ 你答对了！正确答案就是{guess_name}！'
+                    result = f'✅ 正解です！正解は{guess_name}！'
                     session.pop('answer')
                 else:
                     guessed_char = next(char for char in filtered_characters if char['名前'] == guess_name)
                     closeness[guess_name] = 比对结果(guessed_char, answer)
 
                     if session['attempts'] >= guess_chance:
-                        result = f"❌ 你还不够单推..."
+                        result = f"❌ お前はまだまだだ..."
                         session.pop('answer')
 
     answer_exists = 'answer' in session
