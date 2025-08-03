@@ -535,16 +535,16 @@
                    
             <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 6px;">
                 {% for label, value, is_list in [
-                    ("初登場の作品", answer.初登場の作品, False),
-                    ("初登場の年齢", answer.初登場の年齢, False),
-                    ("性別", answer.性別, True),
-                    ("種族", answer.種族, True),
-                    ("出身", answer.出身, True),
-                    ("髪色", answer.髪色, True),
-                    ("肩書", answer.肩書, True),
-                    ("初声出演の年", answer.初声出演の年, False),
-                    ("作品ジャンル", answer.作品ジャンル, True),
-                    ("出演メディア", answer.出演メディア, True)
+                    ("初登場の作品", char.初登場の作品, False),
+                    ("初登場の年齢", char.初登場の年齢, False),
+                    ("性別", char.性別, True),
+                    ("種族", char.種族, True),
+                    ("出身", char.出身, True),
+                    ("髪色", char.髪色, True),
+                    ("肩書", char.肩書, True),
+                    ("初声出演の年", char.初声出演の年, False),
+                    ("作品ジャンル", char.作品ジャンル, True),
+                    ("出演メディア", char.出演メディア, True)
                 ] %}
                 <div style="display: flex; flex-direction: column; align-items: center; width: 80px;">
                     <div class="info-label">{{ label }}</div>
