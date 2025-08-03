@@ -7,7 +7,7 @@ app.secret_key = 'supersecretkey'
 
 with open('nao_characters.json', 'r', encoding='utf-8') as f:
     characters = json.load(f)
-    names = [char['姓名'] for char in characters]
+    names = [char['名前'] for char in characters]
 
 with open('similar_attributes.json', 'r', encoding='utf-8') as f:
     相似属性 = json.load(f)
@@ -63,7 +63,7 @@ def get_guess_chance_from_request(request):
     
 def filter_characters_by_main(characters, only_main):
     if only_main:
-        return [char for char in characters if char.get('是否为主要角色') == '是']
+        return [char for char in characters if char.get('メインキャラかどうか') == '是']
     return characters
     
 def get_year_range_from_request(request):
@@ -85,7 +85,7 @@ def guess():
 
     filtered_characters = [
         char for char in characters
-        if min_year <= int(char.get('初配音年份', 0)) <= max_year
+        if min_year <= int(char.get('初声出演の年', 0)) <= max_year
     ]
 
     filtered_characters = filter_characters_by_main(filtered_characters, only_main)
@@ -93,7 +93,7 @@ def guess():
     if not filtered_characters:
         filtered_characters = characters
 
-    filtered_names = [char['姓名'] for char in filtered_characters]
+    filtered_names = [char['名前'] for char in filtered_characters]
 
     if request.method == 'GET':
         session.pop('answer', None)
@@ -117,7 +117,7 @@ def guess():
 
     if request.method == 'POST':
         if request.form.get("give_up") == "1":
-            result = f"❌ 你还不够单推...正确答案是{answer['姓名']}..."
+            result = f"❌ 你还不够单推...正确答案是{answer['名前']}..."
             session.pop('answer')
         else:
             guess_name = request.form.get('guess_name')
@@ -132,11 +132,11 @@ def guess():
 
                 guessed.append(guess_name)
 
-                if guess_name == answer['姓名']:
+                if guess_name == answer['名前']:
                     result = f'✅ 你答对了！正确答案就是{guess_name}！'
                     session.pop('answer')
                 else:
-                    guessed_char = next(char for char in filtered_characters if char['姓名'] == guess_name)
+                    guessed_char = next(char for char in filtered_characters if char['名前'] == guess_name)
                     closeness[guess_name] = 比对结果(guessed_char, answer)
 
                     if session['attempts'] >= guess_chance:
@@ -144,7 +144,7 @@ def guess():
                         session.pop('answer')
 
     answer_exists = 'answer' in session
-    answer_name = answer['姓名']
+    answer_name = answer['名前']
 
     return render_template(
     'guess.html',
