@@ -776,12 +776,12 @@
                 }
             });
 
-            yearRangeDisplay.textContent = `选中范围：${savedMinYear}年 ～ ${savedMaxYear}年`;
+            yearRangeDisplay.textContent = `選択範囲：${savedMinYear}年 ～ ${savedMaxYear}年`;
 
             yearSlider.noUiSlider.on('update', (values) => {
                 const minYear = values[0];
                 const maxYear = values[1];
-                yearRangeDisplay.textContent = `选中范围：${minYear}年 ～ ${maxYear}年`;
+                yearRangeDisplay.textContent = `選択範囲：${minYear}年 ～ ${maxYear}年`;
             });
 
             noUiSlider.create(guessChanceSlider, {
